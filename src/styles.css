@@ -1,0 +1,223 @@
+/* 1. Use a more-intuitive box-sizing model */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+*:not(dialog) {
+  margin: 0;
+}
+
+/* 3. Enable keyword animations */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+
+body {
+  /* 4. Increase line-height */
+  line-height: 1.5;
+  /* 5. Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 6. Improve media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 7. Inherit fonts for form controls */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* 8. Avoid text overflows */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* 9. Improve line wrapping */
+p {
+  text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+/*
+  10. Create a root stacking context
+*/
+#root,
+#__next {
+  isolation: isolate;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+
+}
+
+.sidebar-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebar {
+ border:5px solid blueviolet;
+  flex: 1;
+}
+
+.main {
+  border: 5px solid greenyellow;
+  flex: 2;
+
+}
+
+.sidebar,
+.main {
+  padding: 20px;
+}
+
+.add-btn {
+  width: 30px;
+  height: 30px;
+  border: 1px solid white;
+  border-radius: 100%;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+li {
+  list-style: none;
+}
+.folder-form{
+  display:flex;
+  gap:4px;
+
+}
+.buttons{
+  display:flex;
+  
+  
+}
+a {
+  color: black;
+  text-decoration: none;
+}
+.submit-button{
+  margin-left:16px;
+  border-radius: 24px;
+  border:none;
+  padding:4px 8px;
+
+}
+input{
+  border-radius:24px;
+  padding-left:12px;
+}
+input:focus{ 
+  outline:none;
+}
+
+ul{
+  padding-left:0;
+}
+.folder-btn,.item-btn{
+  margin-bottom:12px;
+  border:none;
+  background-color:#fff;
+  cursor:pointer;
+}
+.items-nav{
+  display:flex;
+  gap:100px;
+  align-items: center;
+}
+.item-form{
+  display:grid;
+}
+.items-list{
+  display:grid;
+}
+.folder-btn{
+  display: block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.hidden {
+  display: none;
+}
