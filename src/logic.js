@@ -3,7 +3,8 @@ class FoldersList {
     this.folders = [];
   }
 }
-const foldersList = new FoldersList();
+const saved = localStorage.getItem("folderslist");
+const foldersList = saved ? JSON.parse(saved) : new FoldersList();
 class Folder {
   constructor(title) {
     this.title = title;
@@ -24,6 +25,7 @@ class Item {
 function createFolder(name) {
   const newFolder = new Folder(name);
   foldersList.folders.push(newFolder);
+  localStorage.setItem("folderslist", JSON.stringify(foldersList));
   return newFolder;
 }
 function createItem(title, description, due, priority) {
@@ -32,6 +34,7 @@ function createItem(title, description, due, priority) {
 }
 function addItemToFolder(item, folder) {
   folder.items.push(item);
+  localStorage.setItem("folderslist", JSON.stringify(foldersList));
 }
 function toggleCheck(item) {
   if (item.isDone == true) {
@@ -39,48 +42,25 @@ function toggleCheck(item) {
   } else {
     item.isDone = true;
   }
+  localStorage.setItem("folderslist", JSON.stringify(foldersList));
 }
 function changePriority(item, newPriority) {
   item.priority = newPriority;
+  localStorage.setItem("folderslist", JSON.stringify(foldersList));
 }
 function deleteItem(itemToDelete, folder) {
   folder.items = folder.items.filter((item) => item !== itemToDelete);
+  localStorage.setItem("folderslist", JSON.stringify(foldersList));
   return folder.items;
 }
 function deleteFolder(folderToDelete) {
   foldersList.folders = foldersList.folders.filter(
     (item) => item !== folderToDelete,
   );
+  localStorage.setItem("folderslist", JSON.stringify(foldersList));
+
   return foldersList.folders;
 }
-
-const folder1 = createFolder("Work");
-const folder2 = createFolder("Personal");
-
-const item1 = createItem(
-  "Finish report",
-  "Complete the quarterly report",
-  "2024-12-01",
-  "high",
-);
-const item2 = createItem(
-  "Email team",
-  "Send update to the team",
-  "2024-11-30",
-  "medium",
-);
-const item3 = createItem(
-  "Buy groceries",
-  "Milk, eggs, bread",
-  "2024-11-28",
-  "low",
-);
-const item4 = createItem("Go to gym", "Leg day", "2024-11-28", "medium");
-
-addItemToFolder(item1, folder1);
-addItemToFolder(item2, folder1);
-addItemToFolder(item3, folder2);
-addItemToFolder(item4, folder2);
 
 export {
   FoldersList,

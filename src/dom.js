@@ -11,7 +11,7 @@ import {
   deleteFolder,
   foldersList,
 } from "./logic.js";
-
+let activeFolder = null;
 const sidebar = document.createElement("div");
 sidebar.classList.add("sidebar");
 
@@ -47,14 +47,22 @@ function renderFoldersList(foldersList) {
     folderBtn.addEventListener("click", () => {
       renderItems(folder);
     });
+    const deleteFolderBtn = document.createElement("button");
+    deleteFolderBtn.classList.add("delete");
+    deleteFolderBtn.textContent = "Del";
 
-    folderEl.append(folderBtn);
+    deleteFolderBtn.addEventListener("click", () => {
+      deleteFolder(folder);
+      renderFoldersList(foldersList);
+    });
+    folderEl.append(folderBtn, deleteFolderBtn);
     folderList.append(folderEl);
   });
   folderListDiv.append(folderList);
 }
 
 function renderItems(folder) {
+  activeFolder = folder;
   const itemsNav = document.createElement("div");
   itemsNav.classList.add("items-nav");
   const folderName = document.createElement("h1");
@@ -66,6 +74,10 @@ function renderItems(folder) {
     folder.items.forEach((item) => {
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
+      checkbox.addEventListener("click", () => {
+        toggleCheck(item);
+      });
+
       const itemBtn = document.createElement("button");
       itemBtn.classList.add("item-btn");
       const itemEl = document.createElement("li");
@@ -88,11 +100,21 @@ function renderItems(folder) {
         itemDetails.append(itemDescriptionPara, itemDatePara, itemPriorityPara);
         itemBtn.append(itemDetails);
       });
-      itemEl.append(checkbox, itemBtn);
+
+      const deleteItemBtn = document.createElement("button");
+      deleteItemBtn.classList.add("delete");
+      deleteItemBtn.textContent = "Del";
+
+      deleteItemBtn.addEventListener("click", () => {
+        deleteItem(item, activeFolder);
+        renderItems(activeFolder);
+      });
+
+      itemEl.append(checkbox, itemBtn, deleteItemBtn);
       itemsList.append(itemEl);
     });
   } else {
-    itemsListDiv.textContent = "No items yet";
+    itemsList.textContent = "No items yet";
   }
   itemsNav.append(folderName, addItemBtn);
   itemsListDiv.append(itemsNav, itemsList);
@@ -123,7 +145,6 @@ createFolderForm.append(createFolderLabel, folderNameInput, buttonsDiv);
 
 const createItemForm = document.createElement("form");
 createItemForm.classList.add("hidden");
-createFolderForm.classList.add("item-form");
 
 const createItemLabel = document.createElement("label");
 createItemLabel.classList.add("item-label");
@@ -195,8 +216,31 @@ createFolderBtn.addEventListener("click", (e) => {
     return "ERROR";
   }
 });
+createItemBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  if (itemNameInput.value != "") {
+    const newItem = createItem(
+      itemNameInput.value,
+      descriptionInput.value,
+      dateInput.value,
+      priorityInput.value,
+    );
+    addItemToFolder(newItem, activeFolder);
+    itemNameInput.value = "";
+    descriptionInput.value = "";
+    dateInput.value = "";
+    priorityInput.value = "";
+    createItemForm.classList.add("hidden");
+    renderItems(activeFolder);
+  } else {
+    return "ERROR";
+  }
+});
 cancelBtn.addEventListener("click", () => {
   createFolderForm.classList.add("hidden");
+});
+cancelItemBtn.addEventListener("click", () => {
+  createItemForm.classList.add("hidden");
 });
 
 const main = document.createElement("div");
