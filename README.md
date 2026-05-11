@@ -2,6 +2,8 @@
 
 A notebook-themed to-do list app built with vanilla JavaScript and webpack. Organise your tasks into folders, track priorities and due dates, and pick up right where you left off — everything persists in your browser via localStorage.
 
+## Live Demo[https://youtu.be/RsXs2tvbEvM]
+
 ## Features
 
 - Create and delete folders to organise your tasks
